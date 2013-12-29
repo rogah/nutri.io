@@ -84,15 +84,23 @@ module.exports = function (grunt) {
     }
   });
 
+  // Clean & verify code (Run before commit)
   grunt.registerTask('default', [
     'jshint'
   ]);
 
+  // Verify code (Read only)
+  grunt.registerTask('validate', [
+    'jshint'
+  ]);
+
+  // Start server
   grunt.registerTask('server', [
     'express',
     'express-keepalive'
   ]);
 
+  // Run tests
   grunt.registerTask('test', [
     'express:test',
     'cucumberjs'
