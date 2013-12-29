@@ -2,14 +2,14 @@
 
 var homePage = {
 
-	title: 'Rogerio Carvalho',
+  title: 'Rogerio Carvalho',
 
-	path: '/',
+  path: '/',
 
-	assertContent: function (callback) {
-		this.browser.text('body').should.equal('About Nutri');
-		callback();
-	}
+  assertContent: function (callback) {
+    this.browser.text('body').should.equal('About Nutri');
+    callback();
+  }
 };
 
 module.exports.page = homePage;

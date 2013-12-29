@@ -14,6 +14,8 @@
     "grunt-express": "~1.2.1",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-cucumber": "~0.2.3",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-jsbeautifier": "~0.2.6",
     "matchdep": "~0.3.0",
     "connect-livereload": "~0.3.1"
   }
