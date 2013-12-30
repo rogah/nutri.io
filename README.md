@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/rogah/nutri.io.png)](https://travis-ci.org/rogah/nutri.io)
+
+
 nutri.io
 ========
 
