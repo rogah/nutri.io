@@ -1,8 +1,11 @@
 {
   "name": "nutri.io",
   "version": "0.0.1",
-  "description": "Application allows user to keep track nutrition plan and physical assessment.",
+  "description": "Application allows user to keep track of nutrition plan and physical assessment.",
   "author": "Rogerio Carvalho",
+  "scripts": {
+    "test": "grunt validate --verbose"
+  },
   "dependencies": {
     "express": "~3.4.7"
   },
@@ -16,6 +19,7 @@
     "grunt-cucumber": "~0.2.3",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-jsbeautifier": "~0.2.6",
+    "grunt-contrib-imagemin": "~0.4.0",
     "matchdep": "~0.3.0",
     "connect-livereload": "~0.3.1"
   }

@@ -3,13 +3,13 @@
 require('should');
 
 var zombie = require('zombie'),
-    PageFactory = require('./page-factory').PageFactory;
+  PageFactory = require('./page-factory').PageFactory;
 
 var World = function World(callback) {
 
   var browser = new zombie(),
-      factory = new PageFactory(browser);
-    
+    factory = new PageFactory(browser);
+
   this.browser = browser;
 
   this.page = function (pageName) {

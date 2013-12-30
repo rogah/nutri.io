@@ -8,9 +8,11 @@ var PageFactory = function (browser) {
 
 PageFactory.prototype.create = function (pageName) {
   var pageBase = require('./page-base').pageBase,
-      page     = require('./pages/' + pageName).page;
+    page = require('./pages/' + pageName).page;
 
-  return util.mixin(page, pageBase, { browser: this.browser });
+  return util.mixin(page, pageBase, {
+    browser: this.browser
+  });
 };
 
 module.exports.PageFactory = PageFactory;

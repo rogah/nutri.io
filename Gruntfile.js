@@ -3,8 +3,8 @@
 module.exports = function (grunt) {
 
   var path = require('path'),
-      matchdep = require('matchdep');
-  
+    matchdep = require('matchdep');
+
   var config = {
     app: 'src/app',
     server: 'src/server',
@@ -13,19 +13,19 @@ module.exports = function (grunt) {
   };
 
   var clientJsHint = grunt.file.readJSON('.jshintrc'),
-      serverJsHint = grunt.file.readJSON('.jshintrc');
+    serverJsHint = grunt.file.readJSON('.jshintrc');
 
   var clientScripts = [
     path.join(config.app, 'js/**/*.js')
   ];
-  
+
   var serverScripts = [
     'Gruntfile.js',
     path.join(config.server, 'app.js'),
     path.join(config.test, '**/*.js')
   ];
 
-  // var allScripts = clientScripts.concat(serverScripts);
+  var allScripts = clientScripts.concat(serverScripts);
 
   clientJsHint.browser = true; // Don't throw errors for expected browser globals
   serverJsHint.node = true; // Don't throw errors for expected Node globals
@@ -36,6 +36,22 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
+
+    jsbeautifier: {
+      modify: {
+        src: allScripts,
+        options: {
+          config: '.jsbeautifyrc'
+        }
+      },
+      verify: {
+        src: allScripts,
+        options: {
+          mode: 'VERIFY_ONLY',
+          config: '.jsbeautifyrc'
+        }
+      }
+    },
 
     jshint: {
       browser: {
@@ -86,11 +102,13 @@ module.exports = function (grunt) {
 
   // Clean & verify code (Run before commit)
   grunt.registerTask('default', [
+    'jsbeautifier:modify',
     'jshint'
   ]);
 
   // Verify code (Read only)
   grunt.registerTask('validate', [
+    'jsbeautifier:verify',
     'jshint'
   ]);
 
@@ -102,6 +120,8 @@ module.exports = function (grunt) {
 
   // Run tests
   grunt.registerTask('test', [
+    'jsbeautifier:verify',
+    'jshint',
     'express:test',
     'cucumberjs'
   ]);
