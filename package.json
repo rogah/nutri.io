@@ -4,7 +4,7 @@
   "description": "Application allows user to keep track of nutrition plan and physical assessment.",
   "author": "Rogerio Carvalho",
   "scripts": {
-    "test": "grunt validate --verbose"
+    "test": "grunt test --verbose"
   },
   "dependencies": {
     "express": "~3.4.7"
