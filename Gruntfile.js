@@ -21,7 +21,7 @@ module.exports = function (grunt) {
 
   var serverScripts = [
     'Gruntfile.js',
-    path.join(config.server, 'app.js'),
+    path.join(config.server, '**/*.js'),
     path.join(config.test, '**/*.js')
   ];
 
@@ -65,30 +65,33 @@ module.exports = function (grunt) {
     },
 
     express: {
-      options: {
-        server: path.resolve(__dirname, config.server, 'app.js'),
-        port: 9000,
-        hostame: '*'
-      },
-      livereload: {
+      dev: {
         options: {
+          port: 9000,
           server: path.resolve(__dirname, config.server, 'app.js'),
-          bases: [path.resolve(__dirname, config.app, 'public')],
-          livereload: true, // if you just specify `true`, default port `35729` will be used
-          serverreload: true
+          bases: [path.resolve(__dirname, config.server)]
         }
       },
       test: {
         options: {
           port: 9001,
+          server: path.resolve(__dirname, config.server, 'app.js'),
           bases: [path.resolve(__dirname, config.test)]
         }
       },
       dist: {
         options: {
           port: 9002,
+          server: path.resolve(__dirname, config.dist, 'app.js'),
           bases: [path.resolve(__dirname, config.dist)]
         }
+      }
+    },
+
+    open: {
+      dev: {
+        url: 'http://localhost:<%= express.dev.options.port %>',
+        app: 'Google Chrome'
       }
     },
 
@@ -107,14 +110,15 @@ module.exports = function (grunt) {
   ]);
 
   // Verify code (Read only)
-  grunt.registerTask('validate', [
+  grunt.registerTask('verify', [
     'jsbeautifier:verify',
     'jshint'
   ]);
 
   // Start server
   grunt.registerTask('server', [
-    'express',
+    'express:dev',
+    'open:dev',
     'express-keepalive'
   ]);
 
