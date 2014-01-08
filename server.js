@@ -1,7 +1,7 @@
 'user strict';
 
 var app = require('./app/app'),
-  log = require('./app/modules/log')(module);
+  log = require('./app/libs/log')(module);
 
 log.info('Server started at ' + new Date().toISOString());
 

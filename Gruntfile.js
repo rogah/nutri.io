@@ -122,6 +122,7 @@ module.exports = function (grunt) {
 
   // Start server
   grunt.registerTask('server', [
+    'verify',
     'express:dev',
     'open:dev',
     'express-keepalive'
