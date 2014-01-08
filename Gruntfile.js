@@ -78,6 +78,25 @@ module.exports = function (grunt) {
       dev: {
         url: 'http://localhost:<%= express.dev.options.port %>',
         app: 'Google Chrome'
+      },
+      dist: {
+        url: 'http://localhost:<%= express.dist.options.port %>',
+        app: 'Google Chrome'
+      }
+    },
+
+    clean: {
+      dist: {
+        src: path.resolve(__dirname, config.dist)
+      }
+    },
+
+    copy: {
+      dist: {
+        expand: true,
+        cwd: 'app/',
+        src: '**',
+        dest: 'dist/'
       }
     },
 
@@ -90,7 +109,7 @@ module.exports = function (grunt) {
   });
 
   // Clean & verify code (Run before commit)
-  grunt.registerTask('default', [
+  grunt.registerTask('beautify', [
     'jsbeautifier:modify',
     'jshint'
   ]);
@@ -110,9 +129,18 @@ module.exports = function (grunt) {
 
   // Run tests
   grunt.registerTask('test', [
-    'jsbeautifier:verify',
-    'jshint',
+    'verify',
     'express:test',
     'cucumberjs'
+  ]);
+
+  // Build
+  grunt.registerTask('build', [
+    'verify',
+    'clean:dist',
+    'copy:dist',
+    'express:dist',
+    'open:dist',
+    'express-keepalive'
   ]);
 };
