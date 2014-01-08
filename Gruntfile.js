@@ -144,7 +144,7 @@ module.exports = function (grunt) {
     'express-keepalive'
   ]);
 
-  // Heroku
+  // Heroku (--buildpack https://github.com/mbuchetics/heroku-buildpack-nodejs-grunt.git)
   grunt.registerTask('heroku', [
     'verify'
   ]);
