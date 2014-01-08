@@ -143,4 +143,9 @@ module.exports = function (grunt) {
     'open:dist',
     'express-keepalive'
   ]);
+
+  // Heroku
+  grunt.registerTask('heroku', [
+    'verify'
+  ]);
 };
