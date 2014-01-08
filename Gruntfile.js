@@ -1,34 +1,24 @@
 'user strict';
 
+var path = require('path'),
+  matchdep = require('matchdep');
+
 module.exports = function (grunt) {
 
-  var path = require('path'),
-    matchdep = require('matchdep');
-
   var config = {
-    app: 'src/app',
-    server: 'src/server',
+    app: 'app',
     test: 'test',
     dist: 'dist'
   };
 
-  var clientJsHint = grunt.file.readJSON('.jshintrc'),
-    serverJsHint = grunt.file.readJSON('.jshintrc');
+  var jsHint = grunt.file.readJSON('.jshintrc');
 
-  var clientScripts = [
-    path.join(config.app, 'js/**/*.js')
-  ];
-
-  var serverScripts = [
+  var scripts = [
     'Gruntfile.js',
-    path.join(config.server, '**/*.js'),
+    'server.js',
+    path.join(config.app, '**/*.js'),
     path.join(config.test, '**/*.js')
   ];
-
-  var allScripts = clientScripts.concat(serverScripts);
-
-  clientJsHint.browser = true; // Don't throw errors for expected browser globals
-  serverJsHint.node = true; // Don't throw errors for expected Node globals
 
   matchdep.filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -39,13 +29,13 @@ module.exports = function (grunt) {
 
     jsbeautifier: {
       modify: {
-        src: allScripts,
+        src: scripts,
         options: {
           config: '.jsbeautifyrc'
         }
       },
       verify: {
-        src: allScripts,
+        src: scripts,
         options: {
           mode: 'VERIFY_ONLY',
           config: '.jsbeautifyrc'
@@ -54,13 +44,9 @@ module.exports = function (grunt) {
     },
 
     jshint: {
-      browser: {
-        src: clientScripts,
-        options: clientJsHint
-      },
       node: {
-        src: serverScripts,
-        options: serverJsHint
+        src: scripts,
+        options: jsHint
       }
     },
 
@@ -68,14 +54,14 @@ module.exports = function (grunt) {
       dev: {
         options: {
           port: 9000,
-          server: path.resolve(__dirname, config.server, 'app.js'),
-          bases: [path.resolve(__dirname, config.server)]
+          server: path.resolve(__dirname, config.app, 'app.js'),
+          bases: [path.resolve(__dirname, config.app)]
         }
       },
       test: {
         options: {
           port: 9001,
-          server: path.resolve(__dirname, config.server, 'app.js'),
+          server: path.resolve(__dirname, config.app, 'app.js'),
           bases: [path.resolve(__dirname, config.test)]
         }
       },
