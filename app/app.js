@@ -1,11 +1,12 @@
 'use strict';
 
 var express = require('express'),
-  log = require('./libs/log')(module);
+  config = require('./lib/config'),
+  log = require('./lib/log')(module);
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', config.get('PORT'));
 
 app.use(app.router);
 
