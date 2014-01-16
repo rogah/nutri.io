@@ -50,38 +50,44 @@ module.exports = function (grunt) {
       }
     },
 
+    env: {
+      dev: {
+        src: '.env'
+      },
+      test: {
+        src: '.test'
+      },
+      dist: {
+        src: '.dist'
+      }
+    },
+
     express: {
+      options: {
+        hostname: '*'
+      },
       dev: {
         options: {
-          port: 9000,
+          port: 3000,
           server: path.resolve(__dirname, config.app, 'app.js'),
-          bases: [path.resolve(__dirname, config.app)]
+          bases: [path.resolve(__dirname, config.app)],
+          open: true
         }
       },
       test: {
         options: {
-          port: 9001,
+          port: 3001,
           server: path.resolve(__dirname, config.app, 'app.js'),
           bases: [path.resolve(__dirname, config.test)]
         }
       },
       dist: {
         options: {
-          port: 9002,
+          port: 3002,
           server: path.resolve(__dirname, config.dist, 'app.js'),
-          bases: [path.resolve(__dirname, config.dist)]
+          bases: [path.resolve(__dirname, config.dist)],
+          open: true
         }
-      }
-    },
-
-    open: {
-      dev: {
-        url: 'http://localhost:<%= express.dev.options.port %>',
-        app: 'Google Chrome'
-      },
-      dist: {
-        url: 'http://localhost:<%= express.dist.options.port %>',
-        app: 'Google Chrome'
       }
     },
 
@@ -123,14 +129,15 @@ module.exports = function (grunt) {
   // Start server
   grunt.registerTask('server', [
     'verify',
+    'env:dev',
     'express:dev',
-    'open:dev',
     'express-keepalive'
   ]);
 
   // Run tests
   grunt.registerTask('test', [
     'verify',
+    'env:test',
     'express:test',
     'cucumberjs'
   ]);
@@ -140,8 +147,8 @@ module.exports = function (grunt) {
     'verify',
     'clean:dist',
     'copy:dist',
+    'env:dist',
     'express:dist',
-    'open:dist',
     'express-keepalive'
   ]);
 

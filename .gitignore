@@ -16,4 +16,6 @@ node_modules
 
 dist
 .env
+.dev
 .test
+.dist
